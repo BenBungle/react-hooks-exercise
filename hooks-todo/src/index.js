@@ -1,12 +1,47 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { useState, useEffect, useContext, useReducer } from "react";
+import axios from "axios";
+import ReactDOM from "react-dom";
+import TodosContext from "./context";
+import TodosReducer from "./reducer";
+import TodoList from "../src/components/TodoList";
+import TodoForm from "../src/components/TodoForm";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// detail of custom hook
+const useAPI = endpoint => {
+  const [data, setData] = useState([]);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+  // connect to API
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    const response = await axios.get(endpoint);
+    setData(response.data);
+  };
+  return data;
+};
+
+const App = () => {
+  const initialState = useContext(TodosContext);
+  const [state, dispatch] = useReducer(TodosReducer, initialState);
+  // custom hook
+  const savedTodos = useAPI("https://todos-api-zkjdtcbkvp.now.sh/todos");
+
+  // set into global state
+  useEffect(() => {
+    dispatch({ type: "GET_TODOS", payload: savedTodos });
+  },[savedTodos]);
+
+  return (
+    <TodosContext.Provider value={{ state, dispatch }}>
+      <TodoForm />
+      <TodoList />
+    </TodosContext.Provider>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById("root"));
+if (module.hot) {
+    module.hot.accept();
+  }

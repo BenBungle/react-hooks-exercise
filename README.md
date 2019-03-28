@@ -24,6 +24,7 @@ useState, useEffect, useRef, Tailwind CSS
 - React LifeCycle: knowS LifeCycle method, but still not 100. So review and practice
 - React Hooks
 - Redux Thunk
+- Redux Saga
 - Redux Forms
 - React Context API
 - GraphQL

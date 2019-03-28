@@ -1,4 +1,4 @@
-# Learning React Hooks
+# Hooks news
 
 <a href='https://www.udemy.com/react-hooks/'>React Hooks by Reed Barger</a></li>
 3 hours course
