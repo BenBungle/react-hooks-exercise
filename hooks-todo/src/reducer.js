@@ -14,11 +14,7 @@ export default function TodosReducer(state, action) {
       // if (state.todos.findIndex(t => t.text === action.payload) > -1) {
       //   return state;
       // }
-      // const newTodo = {
-      //   id: uuidv4(),
-      //   text: action.payload,
-      //   complete: false
-      // };
+
       const addedTodos = [...state.todos, action.payload];
       return {
         ...state,
